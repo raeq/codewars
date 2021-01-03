@@ -22,7 +22,7 @@ class Solution:
         current_sum: int = 0
 
         for val in nums:
-            current_sum = max(val, current_sum + val)
+            current_sum = max(val, sum([current_sum, val]))
             maximum_sum = max(maximum_sum, current_sum)
 
         return maximum_sum
