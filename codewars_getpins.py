@@ -16,7 +16,7 @@ mapping = {'1': ['1', '2', '4'],
 
 def get_pins(observed):
     lists = [mapping[digit] for digit in observed]
-    return sorted([''.join(x) for x in list(itertools.product(*lists))])
+    return sorted([''.join(x) for x in itertools.product(*lists)])
 
 
 print(get_pins('369'))
