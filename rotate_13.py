@@ -29,5 +29,5 @@ def rotate(value, rotation=13, getstring=True):
     return _translate(value)
 
 
-print(rotate("Test1 Hello3", getstring=True))
-print(rotate("Grfg6 Uryyb8", getstring=True))
+print(rotate("Test1 Hello3"))
+print(rotate("Grfg6 Uryyb8"))
