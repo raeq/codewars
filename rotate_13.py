@@ -1,7 +1,7 @@
 import string
 
 
-def rotate(value, rotation=13, getstring=True):
+def rotate(value, rotation=13, as_string=True):
     def _make_translation(_rotation):
         t = {}
         for c in string.ascii_lowercase:
@@ -24,7 +24,7 @@ def rotate(value, rotation=13, getstring=True):
     def _translate_to_string(_value):
         return "".join(_translate(_value))
 
-    if getstring:
+    if as_string:
         return _translate_to_string(value)
     return _translate(value)
 
