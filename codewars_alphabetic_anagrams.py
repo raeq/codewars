@@ -17,11 +17,11 @@ BOOKKEEPER = 10743
 def listPosition(word):
     """Return the anagram list position of the word"""
     perms = set()
+    for t in permutations(sorted(word), len(word)):
+        perms.add(t)
+        if "".join(t) == word:
+            return len(perms)
 
-    for t in permutations(word, len(word)):
-        perms.add("".join(t))
-
-    return sorted(perms).index(word) + 1
 
 
 testValues = {'ABAB': 2, 'A': 1, 'AAAB': 1, 'BAAA': 4, 'QUESTION': 24572, 'BOOKKEEPER': 10743}
