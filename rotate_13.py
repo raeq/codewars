@@ -29,5 +29,14 @@ def rotate(value, rotation=13, as_string=True):
     return _translate(value)
 
 
-print(rotate("Test1 Hello3"))
-print(rotate("Grfg6 Uryyb8"))
+input_str = "Text in zig zag mode"
+alternate = 0
+build_str = ""
+for c in input_str:
+    alternate += 1
+    if alternate % 2:
+        build_str += rotate(c)
+    else:
+        build_str += c
+
+print(build_str)
