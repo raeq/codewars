@@ -2,6 +2,8 @@ import cmd
 import operator
 import sys
 
+from rich import print as rprint
+
 
 class ProgramLoop(cmd.Cmd):
     """A simple sequential calculator."""
@@ -16,14 +18,16 @@ class ProgramLoop(cmd.Cmd):
         except ValueError:
             return self.default(user_input)
 
-        if len(user_input) > 1:
-            if user_input:
-                result = user_input[0]
-                for v in user_input[1:]:
-                    result = operation(result, v)
-                print(f'Result: {result}')
-            else:
-                print(f'No result.')
+        if user_input:
+            results = []
+            result = user_input[0]
+            results.append(result)
+            for v in user_input[1:]:
+                result = operation(result, v)
+                results.append(result)
+            rprint(f'Result: [i]{results}[/i] = [bold]{result}[/bold]')
+        else:
+            rprint(f'[bold red]No operands, no result.[/bold red]')
 
     def do_add(self, user_input):
         """Add two [numbers]"""
@@ -38,15 +42,33 @@ class ProgramLoop(cmd.Cmd):
         return self.calculate(user_input, operation)
 
     def do_multiply(self, user_input):
-        """Add two [numbers]"""
+        """Multiply two [numbers]"""
 
         operation = operator.mul
         return self.calculate(user_input, operation)
 
     def do_divide(self, user_input):
-        """Add two [numbers]"""
+        """Divide two [numbers]"""
 
         operation = operator.truediv
+        return self.calculate(user_input, operation)
+
+    def do_power(self, user_input):
+        """Power of two numbers"""
+
+        operation = operator.pow
+        return self.calculate(user_input, operation)
+
+    def do_power(self, user_input):
+        """Power of two numbers"""
+
+        operation = operator.pow
+        return self.calculate(user_input, operation)
+
+    def do_floordiv(self, user_input):
+        """Floor division of two numbers"""
+
+        operation = operator.floordiv
         return self.calculate(user_input, operation)
 
     @staticmethod
@@ -56,6 +78,8 @@ class ProgramLoop(cmd.Cmd):
 
     def preloop(self):
         # print('Preparing resources')
+        from rich.console import Console
+        console = Console(color_system = "standard")
         return None
 
     def postloop(self):
