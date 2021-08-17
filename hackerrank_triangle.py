@@ -1,2 +1,5 @@
-for i in range(1, int(input())):  # More than 2 lines will result in 0 score. Do not leave a blank line also
-    print(i * 10 ** i // 9)
+import random
+import string
+
+
+print("".join(random.choices(string.ascii_letters + string.digits, k = 3)))
