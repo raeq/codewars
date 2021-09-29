@@ -18,4 +18,4 @@ for cmd in cmds:
     elif len(cmd) == 1:
         getattr(d, cmd[0])()
 
-print(d)
+print(' '.join(map(str, d)))
