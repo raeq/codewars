@@ -1,5 +1,4 @@
 """A package for Morse encoding and decoding."""
-import string
 from collections import UserDict
 
 
@@ -22,68 +21,67 @@ class MorseDict(UserDict):
             return_val = self.data[item.upper().strip()]
         except KeyError as e:
             if len(item) == 1:
-                return_val = "........"
+                return_val = ""
             elif "." in item:
-                return_val = "?"
+                return_val = "#"
         return return_val
 
 
 class MetaMorse(type):
     """MetaClass to implement class properties for the Morse class."""
-    _morse_tuples: list = [('A', '.='),
-                           ('B', '=...'),
-                           ('C', '=.=.'),
-                           ('D', '=..'),
+    _morse_tuples: list = [('A', '.-'),
+                           ('B', '-...'),
+                           ('C', '-.-.'),
+                           ('D', '-..'),
                            ('E', '.'),
-                           ('F', '..=.'),
-                           ('G', '==.'),
+                           ('F', '..-.'),
+                           ('G', '--.'),
                            ('H', '....'),
                            ('I', '..'),
-                           ('J', '.==='),
-                           ('K', '=.='),
-                           ('L', '.=..'),
-                           ('M', '=='),
-                           ('N', '=.'),
-                           ('O', '==='),
-                           ('P', '.==.'),
-                           ('Q', '==.='),
-                           ('R', '.=.'),
+                           ('J', '.---'),
+                           ('K', '-.-'),
+                           ('L', '.-..'),
+                           ('M', '--'),
+                           ('N', '-.'),
+                           ('O', '---'),
+                           ('P', '.--.'),
+                           ('Q', '--.-'),
+                           ('R', '.-.'),
                            ('S', '...'),
-                           ('T', '='),
-                           ('U', '..='),
-                           ('V', '...='),
-                           ('W', '.=='),
-                           ('X', '=..='),
-                           ('Y', '=.=='),
-                           ('Z', '==..'),
-                           ('1', '.===='),
-                           ('2', '..==='),
-                           ('3', '...=='),
-                           ('4', '....='),
+                           ('T', '-'),
+                           ('U', '..-'),
+                           ('V', '...-'),
+                           ('W', '.--'),
+                           ('X', '-..-'),
+                           ('Y', '-.--'),
+                           ('Z', '--..'),
+                           ('1', '.----'),
+                           ('2', '..---'),
+                           ('3', '...--'),
+                           ('4', '....-'),
                            ('5', '.....'),
-                           ('6', '=....'),
-                           ('7', '==...'),
-                           ('8', '===..'),
-                           ('9', '====.'),
-                           ('0', '====='),
-                           (' ', '       '),
-                           (',', '==..=='),
-                           (':', '===...'),
-                           (';', '=.=.=.'),
-                           ('.', '.=.=.='),
-                           ('"', '.=..=.'),
-                           ('(', '=====.'),
-                           (')', '.====='),
-                           ('\'', '=.==.='),
-                           ('@', '.==.=.'),
-                           ('$', '...=..='),
-                           ('_', '..==.='),
-                           ('-', '=....='),
-                           ('+', '.=.=.'),
-                           ('?', '..==..'),
-                           ('!', '=.=.=='),
-                           ('/', '=..=.'),
-                           ('&', '.=...'),
+                           ('6', '-....'),
+                           ('7', '--...'),
+                           ('8', '---..'),
+                           ('9', '----.'),
+                           ('0', '-----'),
+                           (',', '--..--'),
+                           (':', '---...'),
+                           (';', '-.-.-.'),
+                           ('.', '.-.-.-'),
+                           ('"', '.-..-.'),
+                           ('(', '-----.'),
+                           (')', '.-----'),
+                           ('\'', '-.--.-'),
+                           ('@', '.--.-.'),
+                           ('$', '...-..-'),
+                           ('_', '..--.-'),
+                           ('-', '-....-'),
+                           ('+', '.-.-.'),
+                           ('?', '..--..'),
+                           ('!', '-.-.--'),
+                           ('/', '-..-.'),
+                           ('&', '.-...'),
                            ('#', '........'),
                            ]
     _ascii_to_morse: MorseDict = MorseDict({i[0]: i[1] for i in _morse_tuples})
@@ -127,53 +125,70 @@ class Morse(object, metaclass=MetaMorse):
         return type(self).morse_to_ascii
 
     @classmethod
-    def encode_to_morse(cls, value: str) -> list[str]:
+    def encode_to_morse(cls, value: list[str]) -> str:
         """Class method to encode each character in a string to a morse entry in a list."""
-        return [cls.ascii_to_morse[l] for l in value]
+        if isinstance(value, str):
+            value = value.split(' ')
+
+        for word in value:
+            yield [cls.ascii_to_morse[l] for l in word]
 
     @classmethod
-    def decode_from_morse(cls, value: list[str]) -> list[str]:
+    def decode_from_morse(cls, value: list[str]) -> str:
         """Class method to decode each morse code in a list to an ASCII entry in a list."""
-        return [cls.morse_to_ascii[l] for l in value]
+        if isinstance(value, str):
+            value = value.split(' ' * 7)
+        for word in value:
+            yield [cls.morse_to_ascii[l] for l in word]
 
     @staticmethod
-    def morse_spaced(value: list[str]) -> str:
+    def morse_to_signal(value: list[str]) -> str:
         """Static method to generate a correctly spaced morse string for timing purposes.
         Use with Morse().encode_to_morse()"""
-        for character in value:
-            spacing = 3
-            if character in string.whitespace:
-                spacing = 7
-            yield character + ' ' * spacing
+        for word in value:
+            return_val = ""
+            for morse_character in word:
+                for dot_or_dash in morse_character:
+                    if dot_or_dash == ".":
+                        return_val += '10'
+                    elif dot_or_dash == "-":
+                        return_val += '1110'
+                return_val += '00'
+            yield return_val + '0000'
 
     @staticmethod
-    def morse_chunks(value: str) -> str:
+    def signal_to_morse(value: str) -> list[str]:
         """Static method to return individual morse characters from a morse string.
         3 spaces means a new letter. 7 spaces means a new word.
         Use with Morse().decode_from_morse()"""
 
-        for word in value.split(' ' * 7):
-            for character in word.split(' ' * 3):
-                yield character
-            yield ''
+        for word in value.split('0' * 7):
+            morse_word = []
+            for morse_character in word.split('0' * 3):
+                chars = ""
+                for seq in morse_character.split('0'):
+                    if seq == '111':
+                        chars += "-"
+                    elif seq == "1":
+                        chars += "."
+                morse_word.append(chars)
+            if len(morse_word) >= 1 and len(morse_word[0]) > 0:
+                # only yield a word if the word isn't [''] - equivalent to a final '0000000' in the signal
+                yield morse_word
 
 
 m: Morse = Morse()
 
-print(m.morse_to_ascii)
-print(m.ascii_to_morse)
-
-my_string = "Hello b@#ra^ve new w)rld."
-text_string = m.encode_to_morse(my_string)
-morse_string = m.decode_from_morse(text_string)
+my_string = "Morse Code"
+text_string = list(m.encode_to_morse(my_string))
+morse_string = list(m.decode_from_morse(text_string))
 
 print(my_string)
 print(text_string)
 print(morse_string)
 
-morse_spaced = m.morse_spaced(m.encode_to_morse(my_string))
-morse_spaced = ''.join(morse_spaced)
-print(morse_spaced)
+morse_signal = m.morse_to_signal(m.encode_to_morse(my_string))
+morse_signal = ''.join(morse_signal)
 
-for k, v in enumerate(m.morse_chunks(morse_spaced)):
-    print(k, v, m.morse_to_ascii[v])
+print(morse_signal)
+print(list(m.signal_to_morse(morse_signal)))
