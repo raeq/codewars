@@ -200,6 +200,39 @@ class Morse(object, metaclass=MetaMorse):
                 # only yield a word if the word isn't [''] - equivalent to a final '0000000' in the signal
                 yield morse_word
 
+    @staticmethod
+    def signal_to_audio(signal: str) -> None:
+
+        from pysinewave import SineWave
+        from time import sleep
+
+        sine_wave = SineWave(pitch=10)
+
+        for word in signal.split("0000000"):
+            for morse_code in word.split('000'):
+                morse_triple: MorseTriple
+                morse_dict = Morse.signal_to_morse[morse_code + "000"]
+                if morse_code:
+                    morse_triple = MorseTriple(signal=morse_dict["signal"], ascii=morse_dict["ascii"],
+                                               morse=morse_dict["morse"])
+                    print(morse_triple)
+                    for signal in morse_triple.signal.split('0'):
+                        if len(signal) == 3:
+                            sine_wave.play()
+                            sleep(0.30)
+                            sine_wave.stop()
+                        if len(signal) == 1:
+                            sine_wave.play()
+                            sleep(0.10)
+                            sine_wave.stop()
+
+                sleep(0.40)
+            sleep(1.70)
+
+    @staticmethod
+    def message_to_audio(message: str):
+        signal = Morse.words_to_signal(message)
+        Morse.signal_to_audio(signal)
 
 m: Morse = Morse()
 
@@ -214,4 +247,4 @@ print(decoded_string)
 words_signal = m.words_to_signal(my_string)
 print(words_signal)
 
-print(list(m.signal_to_morse_triples(words_signal)))
+Morse.message_to_audio("SOS.")
