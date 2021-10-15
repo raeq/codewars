@@ -1,6 +1,9 @@
 """A package for Morse encoding and decoding."""
 from collections import UserDict
+from time import sleep
 from typing import NamedTuple
+
+from pysinewave import SineWave
 
 
 class MorseDict(UserDict):
@@ -203,11 +206,7 @@ class Morse(object, metaclass=MetaMorse):
     @staticmethod
     def signal_to_audio(signal: str) -> None:
 
-        from pysinewave import SineWave
-        from time import sleep
-
-        sine_wave = SineWave(pitch=10)
-
+        sine_wave = SineWave(pitch=16)
         for word in signal.split("0000000"):
             for morse_code in word.split('000'):
                 morse_triple: MorseTriple
@@ -219,7 +218,7 @@ class Morse(object, metaclass=MetaMorse):
                     for signal in morse_triple.signal.split('0'):
                         if len(signal) == 3:
                             sine_wave.play()
-                            sleep(0.30)
+                            sleep(0.35)
                             sine_wave.stop()
                         if len(signal) == 1:
                             sine_wave.play()
@@ -227,7 +226,8 @@ class Morse(object, metaclass=MetaMorse):
                             sine_wave.stop()
 
                 sleep(0.40)
-            sleep(1.70)
+            print("<SPACE>")
+            sleep(1.20)
 
     @staticmethod
     def message_to_audio(message: str):
@@ -247,4 +247,4 @@ print(decoded_string)
 words_signal = m.words_to_signal(my_string)
 print(words_signal)
 
-Morse.message_to_audio("SOS.")
+Morse.message_to_audio(my_string)
