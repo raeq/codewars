@@ -234,17 +234,16 @@ class Morse(object, metaclass=MetaMorse):
         signal = Morse.words_to_signal(message)
         Morse.signal_to_audio(signal)
 
-m: Morse = Morse()
 
 my_string = "Morse Code"
-morse_string = list(m.encode_to_morse(my_string))
-decoded_string = list(m.decode_from_morse(morse_string))
+morse_string = list(Morse.encode_to_morse(my_string))
+decoded_string = list(Morse.decode_from_morse(morse_string))
 
 print(my_string)
 print(morse_string)
 print(decoded_string)
 
-words_signal = m.words_to_signal(my_string)
+words_signal = Morse.words_to_signal(my_string)
 print(words_signal)
 
 Morse.message_to_audio(my_string)
