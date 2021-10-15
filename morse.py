@@ -168,7 +168,7 @@ class Morse(object, metaclass=MetaMorse):
     def words_to_signal(value: list[str]) -> str:
         """Static method to generate a correctly spaced morse string for timing purposes."""
         morse_words = list(Morse.encode_to_morse(value))
-        yield ''.join(Morse.morse_to_signal(morse_words))
+        return ''.join(Morse.morse_to_signal(morse_words))
 
     @staticmethod
     def signal_to_morse(value: str) -> list[str]:
