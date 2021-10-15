@@ -28,72 +28,74 @@ class MorseDict(UserDict):
         return return_val
 
 
-class MorseCouple(NamedTuple):
+class MorseTriple(NamedTuple):
     """A couple (tuple with a length of two) representing ascii<->morse mappings."""
     ascii: str
     morse: str
+    signal: str
 
 
 class MetaMorse(type):
     """MetaClass to implement class properties for the Morse class."""
-    _morse_tuples: list = [MorseCouple(ascii='A', morse='.-'),
-                           MorseCouple(ascii='B', morse='-...'),
-                           MorseCouple(ascii='C', morse='-.-.'),
-                           MorseCouple(ascii='D', morse='-..'),
-                           MorseCouple(ascii='E', morse='.'),
-                           MorseCouple(ascii='F', morse='..-.'),
-                           MorseCouple(ascii='G', morse='--.'),
-                           MorseCouple(ascii='H', morse='....'),
-                           MorseCouple(ascii='I', morse='..'),
-                           MorseCouple(ascii='J', morse='.---'),
-                           MorseCouple(ascii='K', morse='-.-'),
-                           MorseCouple(ascii='L', morse='.-..'),
-                           MorseCouple(ascii='M', morse='--'),
-                           MorseCouple(ascii='N', morse='-.'),
-                           MorseCouple(ascii='O', morse='---'),
-                           MorseCouple(ascii='P', morse='.--.'),
-                           MorseCouple(ascii='Q', morse='--.-'),
-                           MorseCouple(ascii='R', morse='.-.'),
-                           MorseCouple(ascii='S', morse='...'),
-                           MorseCouple(ascii='T', morse='-'),
-                           MorseCouple(ascii='U', morse='..-'),
-                           MorseCouple(ascii='V', morse='...-'),
-                           MorseCouple(ascii='W', morse='.--'),
-                           MorseCouple(ascii='X', morse='-..-'),
-                           MorseCouple(ascii='Y', morse='-.--'),
-                           MorseCouple(ascii='Z', morse='--..'),
-                           MorseCouple(ascii='1', morse='.----'),
-                           MorseCouple(ascii='2', morse='..---'),
-                           MorseCouple(ascii='3', morse='...--'),
-                           MorseCouple(ascii='4', morse='....-'),
-                           MorseCouple(ascii='5', morse='.....'),
-                           MorseCouple(ascii='6', morse='-....'),
-                           MorseCouple(ascii='7', morse='--...'),
-                           MorseCouple(ascii='8', morse='---..'),
-                           MorseCouple(ascii='9', morse='----.'),
-                           MorseCouple(ascii='0', morse='-----'),
-                           MorseCouple(ascii=',', morse='--..--'),
-                           MorseCouple(ascii=':', morse='---...'),
-                           MorseCouple(ascii=';', morse='-.-.-.'),
-                           MorseCouple(ascii='.', morse='.-.-.-'),
-                           MorseCouple(ascii='"', morse='.-..-.'),
-                           MorseCouple(ascii='MorseCouple(ascii=', morse='-----.'),
-                           MorseCouple(ascii=')', morse='.-----'),
-                           MorseCouple(ascii='\'', morse='-.--.-'),
-                           MorseCouple(ascii='@', morse='.--.-.'),
-                           MorseCouple(ascii='$', morse='...-..-'),
-                           MorseCouple(ascii='_', morse='..--.-'),
-                           MorseCouple(ascii='-', morse='-....-'),
-                           MorseCouple(ascii='+', morse='.-.-.'),
-                           MorseCouple(ascii='?', morse='..--..'),
-                           MorseCouple(ascii='!', morse='-.-.--'),
-                           MorseCouple(ascii='/', morse='-..-.'),
-                           MorseCouple(ascii='&', morse='.-...'),
-                           MorseCouple(ascii='#', morse='........'),
-                           ]
-    i: MorseCouple
-    _ascii_to_morse: MorseDict = MorseDict({i.ascii: i.morse for i in _morse_tuples})
-    _morse_to_ascii: MorseDict = MorseDict({i.morse: i.ascii for i in _morse_tuples})
+    _morse_tuples: list = [
+        MorseTriple(ascii='A', morse='.-', signal='10111000'),
+        MorseTriple(ascii='B', morse='-...', signal='111010101000'),
+        MorseTriple(ascii='C', morse='-.-.', signal='11101011101000'),
+        MorseTriple(ascii='D', morse='-..', signal='1110101000'),
+        MorseTriple(ascii='E', morse='.', signal='1000'),
+        MorseTriple(ascii='F', morse='..-.', signal='101011101000'),
+        MorseTriple(ascii='G', morse='--.', signal='111011101000'),
+        MorseTriple(ascii='H', morse='....', signal='1010101000'),
+        MorseTriple(ascii='I', morse='..', signal='101000'),
+        MorseTriple(ascii='J', morse='.---', signal='1011101110111000'),
+        MorseTriple(ascii='K', morse='-.-', signal='111010111000'),
+        MorseTriple(ascii='L', morse='.-..', signal='101110101000'),
+        MorseTriple(ascii='M', morse='--', signal='1110111000'),
+        MorseTriple(ascii='N', morse='-.', signal='11101000'),
+        MorseTriple(ascii='O', morse='---', signal='11101110111000'),
+        MorseTriple(ascii='P', morse='.--.', signal='10111011101000'),
+        MorseTriple(ascii='Q', morse='--.-', signal='1110111010111000'),
+        MorseTriple(ascii='R', morse='.-.', signal='1011101000'),
+        MorseTriple(ascii='S', morse='...', signal='10101000'),
+        MorseTriple(ascii='T', morse='-', signal='111000'),
+        MorseTriple(ascii='U', morse='..-', signal='1010111000'),
+        MorseTriple(ascii='V', morse='...-', signal='101010111000'),
+        MorseTriple(ascii='W', morse='.--', signal='101110111000'),
+        MorseTriple(ascii='X', morse='-..-', signal='11101010111000'),
+        MorseTriple(ascii='Y', morse='-.--', signal='1110101110111000'),
+        MorseTriple(ascii='Z', morse='--..', signal='11101110101000'),
+        MorseTriple(ascii='1', morse='.----', signal='10111011101110111000'),
+        MorseTriple(ascii='2', morse='..---', signal='101011101110111000'),
+        MorseTriple(ascii='3', morse='...--', signal='1010101110111000'),
+        MorseTriple(ascii='4', morse='....-', signal='10101010111000'),
+        MorseTriple(ascii='5', morse='.....', signal='101010101000'),
+        MorseTriple(ascii='6', morse='-....', signal='11101010101000'),
+        MorseTriple(ascii='7', morse='--...', signal='1110111010101000'),
+        MorseTriple(ascii='8', morse='---..', signal='111011101110101000'),
+        MorseTriple(ascii='9', morse='----.', signal='11101110111011101000'),
+        MorseTriple(ascii='0', morse='-----', signal='1110111011101110111000'),
+        MorseTriple(ascii=',', morse='--..--', signal='1110111010101110111000'),
+        MorseTriple(ascii=':', morse='---...', signal='11101110111010101000'),
+        MorseTriple(ascii=';', morse='-.-.-.', signal='11101011101011101000'),
+        MorseTriple(ascii='.', morse='.-.-.-', signal='10111010111010111000'),
+        MorseTriple(ascii='"', morse='.-..-.', signal='101110101011101000'),
+        MorseTriple(ascii=')', morse='.-----', signal='101110111011101110111000'),
+        MorseTriple(ascii='\'', morse='-.--.-', signal='1110101110111010111000'),
+        MorseTriple(ascii='@', morse='.--.-.', signal='10111011101011101000'),
+        MorseTriple(ascii='$', morse='...-..-', signal='10101011101010111000'),
+        MorseTriple(ascii='_', morse='..--.-', signal='10101110111010111000'),
+        MorseTriple(ascii='-', morse='-....-', signal='111010101010111000'),
+        MorseTriple(ascii='+', morse='.-.-.', signal='1011101011101000'),
+        MorseTriple(ascii='?', morse='..--..', signal='101011101110101000'),
+        MorseTriple(ascii='!', morse='-.-.--', signal='1110101110101110111000'),
+        MorseTriple(ascii='/', morse='-..-.', signal='1110101011101000'),
+        MorseTriple(ascii='&', morse='.-...', signal='10111010101000'),
+        MorseTriple(ascii='#', morse='........', signal='101010101010101000'),
+    ]
+    i: MorseTriple
+    _ascii_to_morse: MorseDict = MorseDict({i.ascii: i._asdict() for i in _morse_tuples})
+    _morse_to_ascii: MorseDict = MorseDict({i.morse: i._asdict() for i in _morse_tuples})
+    _signal_to_morse: MorseDict = MorseDict({i.signal: i._asdict() for i in _morse_tuples})
 
     @property
     def morse_tuples(cls) -> list:
@@ -109,6 +111,11 @@ class MetaMorse(type):
     def morse_to_ascii(cls) -> MorseDict:
         """Returns the morse to ascii mapping dictionary."""
         return cls._morse_to_ascii
+
+    @property
+    def signal_to_morse(cls) -> MorseDict:
+        """Returns the morse to ascii mapping dictionary."""
+        return cls._signal_to_morse
 
     def __repr__(self):
         return f"{type(self).__name__}({self.data})"
@@ -132,6 +139,11 @@ class Morse(object, metaclass=MetaMorse):
         """Returns the morse to ascii mapping frozen dictionary."""
         return type(self).morse_to_ascii
 
+    @property
+    def signal_to_morse(self) -> MorseDict:
+        """Returns the ascii to morse mapping frozen dictionary."""
+        return type(self).signal_to_morse
+
     @classmethod
     def encode_to_morse(cls, value: list[str]) -> list[str]:
         """Class method to encode each character in a string to a morse entry in a list."""
@@ -139,7 +151,11 @@ class Morse(object, metaclass=MetaMorse):
             value = value.split(' ')
 
         for word in value:
-            yield [cls.ascii_to_morse[l] for l in word]
+            yield [cls.ascii_to_morse[l]["morse"] for l in word]
+
+    @classmethod
+    def encode_to_morse_short(cls, value: list[str]) -> list[str]:
+        return list(Morse.encode_to_morse(value))
 
     @classmethod
     def decode_from_morse(cls, value: list[str]) -> list[str]:
@@ -147,21 +163,20 @@ class Morse(object, metaclass=MetaMorse):
         if isinstance(value, str):
             value = value.split(' ' * 7)
         for word in value:
-            yield [cls.morse_to_ascii[l] for l in word]
+            yield [cls.morse_to_ascii[l]["ascii"] for l in word]
+
+    @classmethod
+    def decode_from_morse_short(cls, value: list[str]) -> list[str]:
+        return list(Morse.decode_from_morse(value))
 
     @staticmethod
     def morse_to_signal(value: list[str]) -> str:
         """Static method to generate a correctly spaced morse string for timing purposes.
         Use with Morse().encode_to_morse()"""
-        for i, word in enumerate(value):
+        for word in value:
             return_val = ""
-            for morse_character in word:
-                for dot_or_dash in morse_character:
-                    if dot_or_dash == ".":
-                        return_val += '10'
-                    elif dot_or_dash == "-":
-                        return_val += '1110'
-                return_val += '00'
+            for morse_code in word:
+                return_val += Morse.morse_to_ascii[morse_code]["signal"]
             yield return_val + '0000'
 
     @staticmethod
@@ -171,21 +186,16 @@ class Morse(object, metaclass=MetaMorse):
         return ''.join(Morse.morse_to_signal(morse_words))
 
     @staticmethod
-    def signal_to_morse(value: str) -> list[str]:
+    def signal_to_morse_triples(value: str) -> list[MorseTriple]:
         """Static method to return individual morse characters from a morse string.
         3 spaces means a new letter. 7 spaces means a new word.
         Use with Morse().decode_from_morse()"""
 
         for word in value.split('0' * 7):
             morse_word = []
-            for morse_character in word.split('0' * 3):
-                chars = ""
-                for seq in morse_character.split('0'):
-                    if seq == '111':
-                        chars += "-"
-                    elif seq == "1":
-                        chars += "."
-                morse_word.append(chars)
+            for morse_code in word.split('0' * 3):
+                morse_code = morse_code + "000"
+                morse_word.append(Morse.signal_to_morse[morse_code])
             if len(morse_word) >= 1 and len(morse_word[0]) > 0:
                 # only yield a word if the word isn't [''] - equivalent to a final '0000000' in the signal
                 yield morse_word
@@ -194,16 +204,14 @@ class Morse(object, metaclass=MetaMorse):
 m: Morse = Morse()
 
 my_string = "Morse Code"
-text_string = list(m.encode_to_morse(my_string))
-morse_string = list(m.decode_from_morse(text_string))
+morse_string = list(m.encode_to_morse(my_string))
+decoded_string = list(m.decode_from_morse(morse_string))
 
 print(my_string)
-print(text_string)
 print(morse_string)
+print(decoded_string)
 
-morse_signal = ''.join(m.morse_to_signal(list(m.encode_to_morse(my_string))))
 words_signal = m.words_to_signal(my_string)
-print(''.join(words_signal))
+print(words_signal)
 
-print(morse_signal)
-print(list(m.signal_to_morse(morse_signal)))
+print(list(m.signal_to_morse_triples(words_signal)))
