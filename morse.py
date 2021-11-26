@@ -206,7 +206,7 @@ class Morse(object, metaclass=MetaMorse):
     @staticmethod
     def signal_to_audio(signal: str) -> None:
 
-        sine_wave = SineWave(pitch=16)
+        sine_wave = SineWave(pitch=19)
         for word in signal.split("0000000"):
             for morse_code in word.split('000'):
                 morse_triple: MorseTriple
@@ -218,14 +218,14 @@ class Morse(object, metaclass=MetaMorse):
                     for signal in morse_triple.signal.split('0'):
                         if len(signal) == 3:
                             sine_wave.play()
-                            sleep(0.35)
+                            sleep(0.1)
                             sine_wave.stop()
                         if len(signal) == 1:
                             sine_wave.play()
-                            sleep(0.10)
+                            sleep(0.05)
                             sine_wave.stop()
 
-                sleep(0.40)
+                sleep(0.3)
             print("<SPACE>")
             sleep(1.20)
 
