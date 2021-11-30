@@ -4,18 +4,18 @@ from collections import Counter
 
 rules = {
     'rock': {
-        'paper': -1,
         'rock': 0,
+        'paper': -1,
         'scissors': 1
     },
     'paper': {
-        'paper': 0,
         'rock': 1,
+        'paper': 0,
         'scissors': -1
     },
     'scissors': {
-        'paper': 1,
         'rock': -1,
+        'paper': 1,
         'scissors': 0
     }
 }
@@ -26,7 +26,7 @@ guess_options = ["rock", "paper", "scissors"]
 
 while True:
     computer_guess = random.choice(guess_options)
-    player_guess = input("Make a guess: ").lower()
+    player_guess = random.choice(guess_options)  # input("Make a guess: ").lower()
 
     if player_guess not in guess_options:
         print("Invalid data entry, try again.")
