@@ -1,14 +1,13 @@
-from typing import Iterable
+from typing import Iterable, Any
 
 
-def deep_flatten(nested: Iterable) -> Iterable:
+def deep_flatten(nested: Iterable[Any]) -> Iterable[Any]:
     for value in nested:
 
         if isinstance(value, (str, bytes)):
             yield value
         elif isinstance(value, Iterable):
-            for nested_value in deep_flatten(value):
-                yield nested_value
+            yield from deep_flatten(value)
         else:
             yield value
 
