@@ -1,4 +1,3 @@
-import logging
 from contextlib import ContextDecorator
 
 
@@ -8,19 +7,23 @@ class suppress(ContextDecorator):
     def __init__(self, *args, name=None, **kwargs):
         self.name = name
         self._suppressed = [*args]
+        self.exception = None
+        self.traceback = None
 
-    def __
 
     def __enter__(self, *args, **kwargs):
-        print(self._suppressed)
-        try:
-            yield
-        except (self._suppressed) as e:
-            print(e)
+        return self
 
     def __exit__(self, exc_type, exc, exc_tb):
-        logging.info('Exiting: %s', self.name)
+        if exc_type:
+            for suppressed in self._suppressed:
+                if issubclass(exc_type, suppressed):
+                    self.exception = exc
+                    self.traceback = exc_tb
+                    return True
 
 
-with suppress(ValueError, RuntimeError):
+context: suppress
+with suppress(ValueError, RuntimeError) as context:
     print("hello")
+    print(context.exception)
