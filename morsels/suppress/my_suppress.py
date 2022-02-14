@@ -7,11 +7,11 @@ class suppress(ContextDecorator):
     def __init__(self, *args, name=None, **kwargs):
         self.name = name
         self._suppressed = [*args]
-        self.exception = None
-        self.traceback = None
 
 
     def __enter__(self, *args, **kwargs):
+        self.exception = None
+        self.traceback = None
         return self
 
     def __exit__(self, exc_type, exc, exc_tb):
