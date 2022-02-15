@@ -1,6 +1,6 @@
 import unittest
 
-from FuzzyString import FuzzyString
+from morsels.custom_collections.FuzzyString import FuzzyString
 
 
 class FuzzyStringTests(unittest.TestCase):
