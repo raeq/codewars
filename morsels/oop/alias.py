@@ -15,9 +15,3 @@ class alias:
         self._private_name = name
         self._is_writeable = write
 
-
-class DataRecord:
-    title = alias("serial")
-
-    def __init__(self, serial):
-        self.serial = serial
